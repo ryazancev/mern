@@ -1,9 +1,7 @@
-const { check } = require('express-validator');
+const auth = require('./auth');
+const login = require('./login');
 
-module.exports = [
-    // Валидация почты
-    check('email', 'Некорректный email') // Второй параметр - сообщение на фронт
-        .isEmail(),
-    check('password', 'Минимальная длина пароля 6 символов')
-        .isLength({ min: 6 }) // Проверяем длину пароля
-]
+module.exports = {
+    auth,
+    login
+}

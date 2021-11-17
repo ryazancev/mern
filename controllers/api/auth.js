@@ -5,7 +5,7 @@ const { validationResult } = require('express-validator');
 module.exports = async (req, res) => {
     try {
         // Нужно для валидации входящих полей
-        const errors = validationResult(req)
+        const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
             // Если ошибки есть - вернем их на фронт
