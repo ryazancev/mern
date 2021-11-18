@@ -9,27 +9,18 @@ export const useRoutes = isAuth => {
     if (isAuth) {
         return (
             <Routes>
-                <Route path={'/links'} exact>
-                    <LinksPage/>
-                </Route>
-                <Route path={'/create'} exact>
-                    <CreatePage/>
-                </Route>
-                <Route path={'/detail/:id'}>
-                    <DetailPage/>
-                </Route>
-                <Navigate to={'/create'}/>
+                <Route path={'/links'} exact element={<LinksPage/>}/>
+                <Route path={'/create'} exact element={<CreatePage/>}/>
+                <Route path={'/detail/:id'} element={<DetailPage/>}/>
+                <Route path={'*'} element={<Navigate replace to="/" />}/>
+            </Routes>
+        )
+    } else {
+        return (
+            <Routes>
+                <Route path={'/'} exact element={<AuthPage/>}/>
+                <Route path={'*'} element={<Navigate replace to="/" />}/>
             </Routes>
         )
     }
-
-    return (
-        <Routes>
-            <Route path={'/'} exact >
-                <AuthPage/>
-            </Route>
-            <Navigate to={'/'}/>
-        </Routes>
-    )
-
 };
