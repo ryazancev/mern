@@ -3,8 +3,13 @@ const app = express();
 const config = require('config');
 const mongoose = require('mongoose');
 const apiRouter = require('./routes');
+const setupMiddlewares = require('./middlewares');
 
-app.use('/api/auth', apiRouter)
+// Различные миддлвары
+setupMiddlewares(app);
+
+// Подключаем роут api
+app.use('/api/auth', apiRouter);
 
 const PORT = config.get('port') || 5000;
 

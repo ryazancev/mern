@@ -12,7 +12,7 @@ export const useRoutes = isAuth => {
                 <Route path={'/links'} exact element={<LinksPage/>}/>
                 <Route path={'/create'} exact element={<CreatePage/>}/>
                 <Route path={'/detail/:id'} element={<DetailPage/>}/>
-                <Route path={'*'} element={<Navigate replace to="/" />}/>
+                <Route path={'/'} element={<Navigate replace to="/create" />}/>
             </Routes>
         )
     } else {
