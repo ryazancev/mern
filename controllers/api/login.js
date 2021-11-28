@@ -18,9 +18,9 @@ module.exports = async (req, res) => {
         }
 
         // Получаем поля из запроса
-        const {email, password} = req.body;
+        const { email, password} = req.body;
         // Ищем пользователя в БД.
-        const user = await User.findOne({email})
+        const user = await User.findOne({ email }).lean();
 
         if (!user) {
             // Если такого пользователя нет, то логин мы уже сделать не можем

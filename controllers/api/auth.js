@@ -6,8 +6,8 @@ module.exports = async (req, res) => {
     try {
         // Нужно для валидации входящих полей
         const errors = validationResult(req);
-
         if (!errors.isEmpty()) {
+
             // Если ошибки есть - вернем их на фронт
             return res.status(400).json({
                 errors: errors.array(), // массив ошибок
@@ -35,6 +35,5 @@ module.exports = async (req, res) => {
 
     } catch (e) {
         res.status(500).json({ message: 'Что-то пошло не так' })
-        console.log(e);
     }
 };

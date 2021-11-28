@@ -1,13 +1,25 @@
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useHttp} from "../hooks/http.hook";
+import {useMessage} from "../hooks/message.hook";
+import {AuthContext} from "../context/AuthContext";
 
 export const AuthPage = () => {
+    // воспользуемся конетекстом с помощью useContext
+    const auth = useContext(AuthContext);
+    const message = useMessage();
     // Используем свой хук useHttp
-    const {loading, error, request} = useHttp();
+    const {loading, error, request, clearError} = useHttp();
     // Хук возвращает объект и метод с помощью которого мы можем поменять данные в объекте
     const [form, setForm] = useState({
         email: '', password: ''
     });
+    // Используем хук useEffect
+    // если меняется ошибка то мы выводим сообщение на экран с этой ошибкой
+    useEffect(() => {
+        message(error);
+        clearError();
+    }, [error, message, clearError]);
+
 
     // Достаем значения из формы логина
     const changeHandler = e => {
@@ -20,6 +32,19 @@ export const AuthPage = () => {
         try {
             // Получаем данные с сервера
             const data = await request('/api/auth/register', 'post', {...form}); // разворачиваем объект которые заполнили из формы
+            // Показываем всплывающее сообщение на экране
+            message(data.message);
+        } catch (e) {
+            // Оставим пустым, потому что обработали его в useHttp
+        }
+    };
+
+    const loginHandler = async () => {
+        try {
+            // Получаем данные с сервера
+            const data = await request('/api/auth/login', 'post', {...form}); // разворачиваем объект которые заполнили из формы
+            // воспользуемся медотом логин который мы передали через контекст
+            auth.login(data.token, data.userId);
         } catch (e) {
             // Оставим пустым, потому что обработали его в useHttp
         }
@@ -59,7 +84,7 @@ export const AuthPage = () => {
                             className={`btn yellow darken-4`}
                             style={{marginRight: 10}}
                             disabled={loading}
-                            onClick={registerHandler}>
+                            onClick={loginHandler}>
                             Войти
                         </button>
                         <button

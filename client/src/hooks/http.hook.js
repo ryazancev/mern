@@ -24,7 +24,7 @@ export const useHttp = () => {
             const response = await fetch(url, { method, body, headers });
             const data = await response.json();
 
-            if (response.ok) {
+            if (!response.ok) {
                 throw new Error(data.message || 'Что-то пошло не так') // data.message - определяли на бэке
             }
 
@@ -39,7 +39,6 @@ export const useHttp = () => {
     }, []);
 
     // Чистим ошибки
-    const clearError = () => setError(null)
-
+    const clearError = useCallback(() => setError(null), []);
     return { loading, error, request, clearError }
 };

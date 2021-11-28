@@ -5,9 +5,9 @@ const validators = require('./validators');
 const apiRouter = Router();
 
 // /api/auth/register
-apiRouter.get('/register', validators.auth, api.auth);
+apiRouter.post('/register', validators.auth, api.auth);
 
 // /api/auth/login
-apiRouter.get('/login', validators.login, api.login);
+apiRouter.post('/login', validators.login, api.login);
 
 module.exports = apiRouter;
