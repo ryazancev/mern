@@ -1,5 +1,7 @@
-const { json } = require("express");
+const setupMiddlewares = require('./setupMiddlewares');
+const auth = require('./auth');
 
-module.exports = (app) => {
-    app.use( json() );
+module.exports = {
+    auth,
+    setupMiddlewares,
 };

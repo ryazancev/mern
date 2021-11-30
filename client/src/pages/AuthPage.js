@@ -7,12 +7,15 @@ export const AuthPage = () => {
     // воспользуемся конетекстом с помощью useContext
     const auth = useContext(AuthContext);
     const message = useMessage();
+
     // Используем свой хук useHttp
     const {loading, error, request, clearError} = useHttp();
+
     // Хук возвращает объект и метод с помощью которого мы можем поменять данные в объекте
     const [form, setForm] = useState({
         email: '', password: ''
     });
+
     // Используем хук useEffect
     // если меняется ошибка то мы выводим сообщение на экран с этой ошибкой
     useEffect(() => {
@@ -20,6 +23,10 @@ export const AuthPage = () => {
         clearError();
     }, [error, message, clearError]);
 
+    // убираем проблемы у инпутов, делая из активными
+    useEffect(() => {
+        window.M.updateTextFields();
+    }, []);
 
     // Достаем значения из формы логина
     const changeHandler = e => {

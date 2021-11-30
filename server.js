@@ -2,14 +2,16 @@ const express = require('express');
 const app = express();
 const config = require('config');
 const mongoose = require('mongoose');
-const apiRouter = require('./routes');
-const setupMiddlewares = require('./middlewares');
+const { apiRouter, linkRouter } = require('./routes');
+const { setupMiddlewares } = require('./middlewares');
 
 // Различные миддлвары
 setupMiddlewares(app);
 
 // Подключаем роут api
 app.use('/api/auth', apiRouter);
+// Подключаем роут link
+app.use('/links/link', linkRouter);
 
 const PORT = config.get('port') || 5000;
 

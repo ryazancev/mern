@@ -20,8 +20,7 @@ module.exports = async (req, res) => {
         // Получаем поля из запроса
         const { email, password} = req.body;
         // Ищем пользователя в БД.
-        const user = await User.findOne({ email }).lean();
-
+        const user = await User.findOne({ email });
         if (!user) {
             // Если такого пользователя нет, то логин мы уже сделать не можем
             return res.status(400).json({message: 'Пользователь не найден'});
@@ -36,7 +35,7 @@ module.exports = async (req, res) => {
 
         // Создаем token для защиты
         const token = jwt.sign(
-            {userId: user.id}, // Данные, которые будут зашифрованы в токене
+            {userId: user._id.toString()}, // Данные, которые будут зашифрованы в токене
             config.get('jwtSecret'), // Секретное поле, которое мы создали в конфиге
             { expiresIn: '1h'} // Через сколько токен умрет (1час)
         );
