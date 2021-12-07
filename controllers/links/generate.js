@@ -7,8 +7,8 @@ module.exports = async (req, res) => {
         const baseUrl = config.get('baseUrl');
 
         // с фронта будем получать from
-        const {from} = req.base;
-        const code = shortid.geterate();
+        const { from } = req.body;
+        const code = shortid.generate();
 
         const existing = await Link.findOne({ from });
 

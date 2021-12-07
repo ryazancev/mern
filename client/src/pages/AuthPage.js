@@ -72,6 +72,7 @@ export const AuthPage = () => {
                                        type="email"
                                        className="validate yellow-input"
                                        name='email'
+                                       value={form.email}
                                        onChange={changeHandler}/>
                                 <label htmlFor="email">EMAIL</label>
                             </div>
@@ -81,6 +82,7 @@ export const AuthPage = () => {
                                        type="password"
                                        className="validate yellow-input"
                                        name='password'
+                                       value={form.password}
                                        onChange={changeHandler}/>
                                 <label htmlFor="password">Password</label>
                             </div>
