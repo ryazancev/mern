@@ -3,8 +3,9 @@ import { useState, useCallback, useEffect } from "react";
 const storageName = 'userData';
 
 export const useAuth = () => {
-// Стэйт который отвечает за токен и юзера
+    // Стэйт который отвечает за токен и юзера
     const [token, setToken] = useState(null);
+    const [ready, setReady] = useState(false);
     const [userId, setUserId] = useState(null);
 
     const login = useCallback((jwtToken, id) => {
@@ -29,6 +30,7 @@ export const useAuth = () => {
         if (data && data.token) {
             login(data.token, data.userId)
         }
+        setReady(true);
     }, [login]);
-    return { login, logout, token, userId }
+    return { login, logout, token, userId, ready }
 };

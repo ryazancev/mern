@@ -11,9 +11,9 @@ export const CreatePage = () => {
     const auth = useContext(AuthContext);
 
     const {request} = useHttp();
-
+    // чтобы записать в стэйт ссылку и потом через реквест отправить ее
     const [link, setLink] = useState('');
-
+    // чтобы на enter отправить ссылку
     const pressHandler = async e => {
         if (e.key === 'Enter') {
             try {

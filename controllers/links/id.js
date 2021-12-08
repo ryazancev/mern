@@ -1,3 +1,5 @@
+const Link = require('../../models/Link');
+
 module.exports = async (req, res) => {
     try {
         const links = await Link.findById(req.params.id);

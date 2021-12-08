@@ -1,7 +1,40 @@
+import {useCallback, useContext, useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
+import {useHttp} from "../hooks/http.hook";
+import {AuthContext} from "../context/AuthContext";
+import {Loader} from "../components/Loader";
+import {LinkCard} from "../components/LinkCard";
+
 export const DetailPage = () => {
+    const { token } = useContext(AuthContext);
+    const { request, loading } = useHttp();
+    // Получим ссылку с бэка (по умолчанию будет нулл)
+    const [link, setLink] = useState(null);
+    // Получаем id ссылки из адресной строки, .id - здесь id потому что в роутах мы сами прописали /:id
+    const linkId = useParams().id;
+
+    const getLink = useCallback(async () => {
+        try {
+            const fetched = await request(`/links/link/${linkId}`, 'GET', null, {
+                Authorization: `Bearer ${token}`
+            });
+            setLink(fetched);
+        } catch (e) {
+            console.log(e)
+        }
+    }, [token, linkId, request]);
+
+    useEffect(() => {
+        getLink();
+    }, [getLink]);
+
+    if (loading) {
+        return <Loader/>
+    }
+
     return (
-        <div className={'container'}>
-            <h1>DetailPage</h1>
-        </div>
-    )
+        <>
+            { !loading && link && <LinkCard link={link}/> }
+        </>
+    );
 };
